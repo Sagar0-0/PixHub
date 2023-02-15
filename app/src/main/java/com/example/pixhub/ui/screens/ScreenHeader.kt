@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ScreenHeader(
-    onNavigationIconClick: () -> Unit,
+    onMenuIconClick: () -> Unit,
     fieldHint: String
 ) {
     Row(
@@ -55,7 +55,7 @@ fun ScreenHeader(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = rememberRipple(bounded = false, radius = 16.dp)
                     ) {
-                        onNavigationIconClick()
+                        onMenuIconClick()
                     }
                 )
             },
@@ -73,7 +73,7 @@ fun ScreenHeader(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = rememberRipple(bounded = false, radius = 16.dp)
                         ) {
-                            onNavigationIconClick()
+                            onMenuIconClick()
                         }
                     )
                 }

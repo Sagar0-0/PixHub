@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pixhub.ui.theme.PixHubTheme
 
 @Composable
 fun DrawerHeader() {
@@ -26,20 +28,21 @@ fun DrawerHeader() {
 }
 
 @Composable
-fun DrawerBody(
-    items: List<DrawerScreen>,
+fun Drawer(
     modifier: Modifier = Modifier,
     itemTextStyle: TextStyle = TextStyle(fontSize = 16.sp),
-    onItemClick: (DrawerScreen) -> Unit
+    onItemClick: (String) -> Unit = {}
 ) {
-    LazyColumn(modifier = modifier) {
-        items(items) { item ->
+    LazyColumn(modifier) {
+        item {
+            DrawerHeader()
+        }
+        items(screens) { item ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable {
-                        onItemClick(item)
-
+                        onItemClick(item.title)
                     }
                     .padding(16.dp)
             ) {
@@ -52,5 +55,12 @@ fun DrawerBody(
                 )
             }
         }
+    }
+}
+@Preview
+@Composable
+fun DrawerPreview() {
+    PixHubTheme {
+        Drawer()
     }
 }
