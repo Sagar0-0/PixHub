@@ -62,7 +62,6 @@ fun AppScaffold() {
             },
             fieldHint = "Search.."
         )
-        Spacer(modifier = Modifier.padding(10.dp))
         NavigationHost(navController)
     }
 }
