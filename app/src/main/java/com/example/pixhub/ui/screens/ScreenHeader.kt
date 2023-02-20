@@ -1,10 +1,12 @@
 package com.example.pixhub.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -19,24 +21,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+
+@Composable
+@Preview
+fun ScreenHeaderPreview() {
+    ScreenHeader({}, fieldHint = "Search..",{})
+}
 @Composable
 fun ScreenHeader(
     onMenuIconClick: () -> Unit,
-    fieldHint: String
+    fieldHint: String,
+    onSearchIconClick: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
+            .fillMaxWidth()
             .padding(
                 top = 10.dp,
                 start = 5.dp,
                 end = 10.dp,
                 bottom = 10.dp,
             )
-            .fillMaxWidth()
+            .shadow(5.dp, CircleShape)
+            .background(Color.White, CircleShape)
     ) {
         val inputText = rememberSaveable {
             mutableStateOf("")
@@ -73,7 +87,7 @@ fun ScreenHeader(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = rememberRipple(bounded = false, radius = 16.dp)
                         ) {
-                            onMenuIconClick()
+                            onSearchIconClick(inputText.value)
                         }
                     )
                 }
