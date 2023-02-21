@@ -45,7 +45,7 @@ fun ScreenHeader(
             .fillMaxWidth()
             .padding(
                 top = 10.dp,
-                start = 5.dp,
+                start = 10.dp,
                 end = 10.dp,
                 bottom = 10.dp,
             )
@@ -67,7 +67,7 @@ fun ScreenHeader(
                     contentDescription = "Drawer Icon",
                     modifier = Modifier.clickable(
                         interactionSource = remember { MutableInteractionSource() },
-                        indication = rememberRipple(bounded = false, radius = 16.dp)
+                        indication = rememberRipple(bounded = false, radius = 18.dp)
                     ) {
                         onMenuIconClick()
                     }
@@ -85,7 +85,7 @@ fun ScreenHeader(
                         contentDescription = "Search Button",
                         modifier = Modifier.clickable(
                             interactionSource = remember { MutableInteractionSource() },
-                            indication = rememberRipple(bounded = false, radius = 16.dp)
+                            indication = rememberRipple(bounded = false, radius = 18.dp)
                         ) {
                             onSearchIconClick(inputText.value)
                         }

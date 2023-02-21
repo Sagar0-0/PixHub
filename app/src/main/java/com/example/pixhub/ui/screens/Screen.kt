@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val title: String, val icon: ImageVector) {
     object Home : Screen("Home", Icons.Default.Home)
+    object Images : Screen("Images", Icons.Default.Person)
     object Bookmarks : Screen("Bookmarks", Icons.Default.Favorite)
     object Downloads : Screen("Downloads", Icons.Default.ArrowDropDown)
     object History : Screen("History", Icons.Default.Clear)

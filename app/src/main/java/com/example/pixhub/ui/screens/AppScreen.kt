@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.pixhub.ui.data.ImageViewModel
 import com.example.pixhub.utils.customDrawerShape
 import com.example.pixhub.utils.toPx
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +32,13 @@ Help
  */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AppScreen(drawerState: DrawerState, navController: NavHostController, scope: CoroutineScope) {
+fun AppScreen(
+    drawerState: DrawerState,
+    navController: NavHostController,
+    scope: CoroutineScope,
+    imageViewModel: ImageViewModel
+    )
+{
     ModalDrawer(
         drawerState = drawerState,
         gesturesEnabled = drawerState.isOpen,
@@ -53,22 +60,29 @@ fun AppScreen(drawerState: DrawerState, navController: NavHostController, scope:
                 scope.launch { drawerState.open() }
             },
             fieldHint = "Search.."
-        ){
-            //Search Query...
+        ) {
+            imageViewModel.searchUnsplashImage(it)
+            navController.navigate(Screen.Images.title){
+                launchSingleTop = true
+            }
+            focusManager.clearFocus()
         }
-        NavigationHost(navController)
+        NavigationHost(navController,imageViewModel)
     }
 }
 
 @Composable
-fun NavigationHost(navController: NavHostController) {
+fun NavigationHost(navController: NavHostController,imageViewModel: ImageViewModel) {
     NavHost(
-        modifier = Modifier.padding(top = 80.dp),
+        modifier = Modifier.padding(top = 70.dp),
         navController = navController,
         startDestination = Screen.Home.title
     ) {
         composable(Screen.Home.title) {
             Home()
+        }
+        composable(Screen.Images.title) {
+            ImageSearchGrid(navController,imageViewModel)
         }
         composable(Screen.About.title) {
             About()
