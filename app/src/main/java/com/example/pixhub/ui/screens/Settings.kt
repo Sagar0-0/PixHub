@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun About() {
+fun Settings() {
     Column(
-        modifier = Modifier.fillMaxSize().background(Color.DarkGray),
+        modifier = Modifier.fillMaxSize().background(Color.Magenta),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "About")
+        Text(text = "Settings")
     }
 }

@@ -20,10 +20,10 @@ fun DrawerHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 64.dp),
+            .padding(vertical = 60.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Header", fontSize = 16.sp)
+        Text(text = "Header", fontSize = 18.sp)
     }
 }
 
@@ -37,7 +37,8 @@ fun Drawer(
         item {
             DrawerHeader()
         }
-        items(screens) { item ->
+        items(screens)
+            { item ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -60,7 +61,5 @@ fun Drawer(
 @Preview
 @Composable
 fun DrawerPreview() {
-    PixHubTheme {
-        Drawer()
-    }
+    Drawer()
 }

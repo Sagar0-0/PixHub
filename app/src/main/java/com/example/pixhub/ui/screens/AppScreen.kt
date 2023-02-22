@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
@@ -35,31 +36,32 @@ Help
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppScreen(
-    drawerState: DrawerState,
+    scaffoldState: ScaffoldState,
     navController: NavHostController,
     scope: CoroutineScope,
     imageViewModel: ImageViewModel = hiltViewModel()
     )
 {
-    ModalDrawer(
-        drawerState = drawerState,
-        gesturesEnabled = drawerState.isOpen,
+    Scaffold(
+        scaffoldState = scaffoldState,
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
             Drawer { route ->
-                scope.launch { drawerState.close() }
+                scope.launch { scaffoldState.drawerState.close() }
                 navController.navigate(route) {
                     popUpTo(navController.graph.startDestinationId)
                     launchSingleTop = true
                 }
             }
         },
+        drawerElevation = 90.dp,
         drawerShape = customDrawerShape(LocalConfiguration.current.screenHeightDp.dp.toPx())
     ) {
         val focusManager = LocalFocusManager.current
         ScreenHeader(
             onMenuIconClick = {
                 focusManager.clearFocus()
-                scope.launch { drawerState.open() }
+                scope.launch { scaffoldState.drawerState.open() }
             },
             fieldHint = "Search.."
         ) {
@@ -86,8 +88,26 @@ fun NavigationHost(navController: NavHostController,imageViewModel: ImageViewMod
         composable(Screen.Images.title) {
             ImageSearchGrid(navController,imageViewModel)
         }
+        composable(Screen.Bookmarks.title) {
+            Bookmarks()
+        }
+        composable(Screen.Downloads.title) {
+            Downloads()
+        }
+        composable(Screen.History.title) {
+            History()
+        }
+        composable(Screen.Profile.title) {
+            Profile()
+        }
+        composable(Screen.Settings.title) {
+            Settings()
+        }
         composable(Screen.About.title) {
             About()
+        }
+        composable(Screen.Help.title) {
+            Help()
         }
     }
 }

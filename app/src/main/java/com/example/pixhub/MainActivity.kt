@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.rememberDrawerState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
@@ -20,10 +21,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PixHubTheme {
-                val drawerState = rememberDrawerState(DrawerValue.Closed)
+                val scaffoldState = rememberScaffoldState()
                 val navController = rememberNavController()
                 val scope = rememberCoroutineScope()
-                AppScreen(drawerState,navController, scope)
+                AppScreen(scaffoldState,navController, scope)
             }
         }
     }
