@@ -30,6 +30,7 @@ class ImageViewModel @Inject constructor(
             unsplashCurrentPage = 1
             searchQuery.value = query
         }
+        unsplashError.value = ""
         viewModelScope.launch {
             when (val result = repository.searchPhotos(query, unsplashCurrentPage)) {
                 is Resource.Success -> {
@@ -39,7 +40,7 @@ class ImageViewModel @Inject constructor(
                     val list = result.data.results.map {
                         it.urls.thumb
                     }
-                    unsplashImagesList.value = unsplashImagesList.value.plus(list)
+                    unsplashImagesList.value += list
                 }
                 is Resource.Error -> {
                     unsplashError.value = result.message!!

@@ -20,11 +20,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PixHubTheme {
-                val imageViewModel : ImageViewModel by viewModels()
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val navController = rememberNavController()
                 val scope = rememberCoroutineScope()
-                AppScreen(drawerState,navController, scope, imageViewModel)
+                AppScreen(drawerState,navController, scope)
             }
         }
     }
