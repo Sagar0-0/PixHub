@@ -2,19 +2,21 @@ package com.example.pixhub.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.pixhub.ui.data.ImageViewModel
 import com.example.pixhub.utils.customDrawerShape
 import com.example.pixhub.utils.toPx
@@ -36,20 +38,26 @@ Help
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppScreen(
-    scaffoldState: ScaffoldState,
-    navController: NavHostController,
-    scope: CoroutineScope,
-    imageViewModel: ImageViewModel = hiltViewModel()
-    )
-{
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    navController: NavHostController = rememberNavController(),
+    scope: CoroutineScope = rememberCoroutineScope(),
+    imageViewModel: ImageViewModel = hiltViewModel(),
+    drawerLazyListState: LazyListState = rememberLazyListState()
+) {
+    var selectedDrawerItem by rememberSaveable {
+        mutableStateOf(Screen.Home.title)
+    }
     Scaffold(
         scaffoldState = scaffoldState,
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
-            Drawer { route ->
+            Drawer(drawerLazyListState = drawerLazyListState, selectedDrawerItem = selectedDrawerItem) { route ->
+                selectedDrawerItem = route
                 scope.launch { scaffoldState.drawerState.close() }
                 navController.navigate(route) {
-                    popUpTo(navController.graph.startDestinationId)
+                    popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
+                        inclusive =  true
+                    }
                     launchSingleTop = true
                 }
             }
@@ -66,17 +74,17 @@ fun AppScreen(
             fieldHint = "Search.."
         ) {
             imageViewModel.searchUnsplashImage(it)
-            navController.navigate(Screen.Images.title){
+            navController.navigate(Screen.Images.title) {
                 launchSingleTop = true
             }
             focusManager.clearFocus()
         }
-        NavigationHost(navController,imageViewModel)
+        NavigationHost(navController, imageViewModel)
     }
 }
 
 @Composable
-fun NavigationHost(navController: NavHostController,imageViewModel: ImageViewModel) {
+fun NavigationHost(navController: NavHostController, imageViewModel: ImageViewModel) {
     NavHost(
         modifier = Modifier.padding(top = 70.dp),
         navController = navController,
@@ -86,7 +94,7 @@ fun NavigationHost(navController: NavHostController,imageViewModel: ImageViewMod
             Home()
         }
         composable(Screen.Images.title) {
-            ImageSearchGrid(navController,imageViewModel)
+            ImageSearchGrid(navController, imageViewModel)
         }
         composable(Screen.Bookmarks.title) {
             Bookmarks()

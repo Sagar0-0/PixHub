@@ -21,10 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PixHubTheme {
-                val scaffoldState = rememberScaffoldState()
-                val navController = rememberNavController()
-                val scope = rememberCoroutineScope()
-                AppScreen(scaffoldState,navController, scope)
+                AppScreen()
             }
         }
     }
