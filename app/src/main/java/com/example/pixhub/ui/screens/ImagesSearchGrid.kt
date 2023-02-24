@@ -1,6 +1,7 @@
 package com.example.pixhub.ui.screens
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,9 +29,10 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.pixhub.R
 import com.example.pixhub.ui.data.ImageViewModel
+import com.example.pixhub.utils.NO_SCROLL_NUMBER
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewModel) {
     val images by remember { imageViewModel.unsplashImagesList }
@@ -48,7 +50,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
             } else StaggeredGridCells.Fixed(2)
         LazyVerticalStaggeredGrid(
             state = listState,
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp),
             columns = cellConfiguration,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -86,7 +88,12 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
         if (isLoading) {
             CircularProgressIndicator()
         }
-        if (listState.firstVisibleItemIndex > 8) {
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            visible = listState.firstVisibleItemIndex > NO_SCROLL_NUMBER,
+            enter = scaleIn() + expandVertically(expandFrom = Alignment.CenterVertically),
+            exit = scaleOut() + shrinkVertically(shrinkTowards = Alignment.CenterVertically)
+        ) {
             Icon(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -103,13 +110,6 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
                 contentDescription = "Up"
             )
         }
-//        if (loadingError.isNotEmpty()) {
-//            Text(text = imageViewModel.unsplashError.value)
-//        }
-//        if (endReached) {
-//            Text(text = "End Reached")
-//        }
     }
-
 }
 
