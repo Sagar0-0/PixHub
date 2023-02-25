@@ -73,7 +73,7 @@ fun AppScreen(
             },
             fieldHint = "Search.."
         ) {
-            imageViewModel.searchPexelsImage(it)
+            imageViewModel.searchPixabayImage(it)
             navController.navigate(Screen.Images.title) {
                 launchSingleTop = true
             }

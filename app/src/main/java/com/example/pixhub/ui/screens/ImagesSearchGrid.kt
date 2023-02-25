@@ -31,13 +31,14 @@ import com.example.pixhub.R
 import com.example.pixhub.ui.data.ImageViewModel
 import com.example.pixhub.utils.NO_SCROLL_NUMBER
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewModel) {
-    val images by remember { imageViewModel.pexelsImagesList }
+    val images by remember { imageViewModel.pixabayImagesList }
     val endReached by remember { imageViewModel.unsplashEndReached }
-    val isLoading by remember { imageViewModel.isPexelsLoading }
+    val isLoading by remember { imageViewModel.isPixabayLoading }
     val loadingError by remember { imageViewModel.unsplashError }
     val size by remember { mutableStateOf(images.size) }
     val listState = rememberLazyStaggeredGridState()
@@ -75,7 +76,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
                         ),
                 )
                 if (index >= size - 1 && !endReached) {
-                    imageViewModel.searchPexelsImage()
+                    imageViewModel.searchPixabayImage()
                 }
             }
         }

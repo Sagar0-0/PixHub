@@ -1,9 +1,11 @@
 package com.example.pixhub.di
 
 import com.example.pixhub.data.remote.PexelsApi
+import com.example.pixhub.data.remote.PixabayApi
 import com.example.pixhub.data.remote.UnsplashApi
 import com.example.pixhub.utils.PEXELS_API_KEY
 import com.example.pixhub.utils.PEXELS_BASE_URL
+import com.example.pixhub.utils.PIXABAY_BASE_URL
 import com.example.pixhub.utils.UNSPLASH_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -26,6 +28,15 @@ object NetworkModule {
         .baseUrl(UNSPLASH_BASE_URL)
         .build()
         .create(UnsplashApi::class.java)
+
+
+    @Provides
+    @Singleton
+    fun providePixabayApi() : PixabayApi = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(PIXABAY_BASE_URL)
+        .build()
+        .create(PixabayApi::class.java)
 
     @Provides
     @Singleton

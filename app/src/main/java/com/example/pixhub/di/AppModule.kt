@@ -1,11 +1,9 @@
 package com.example.pixhub.di
 
 import com.example.pixhub.data.remote.PexelsApi
+import com.example.pixhub.data.remote.PixabayApi
 import com.example.pixhub.data.remote.UnsplashApi
-import com.example.pixhub.repository.PexelsRepoImpl
-import com.example.pixhub.repository.PexelsRepository
-import com.example.pixhub.repository.UnsplashRepoImpl
-import com.example.pixhub.repository.UnsplashRepository
+import com.example.pixhub.repository.*
 import com.example.pixhub.utils.UNSPLASH_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -31,4 +29,10 @@ object AppModule {
     fun providePexelsRepo(
         api: PexelsApi
     ) : PexelsRepository = PexelsRepoImpl(api)
+
+    @Provides
+    @Singleton
+    fun providePixabayRepo(
+        api: PixabayApi
+    ) : PixabayRepository = PixabayRepoImpl(api)
 }
