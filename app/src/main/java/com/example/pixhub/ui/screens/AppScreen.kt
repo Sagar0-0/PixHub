@@ -41,9 +41,9 @@ fun AppScreen(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     navController: NavHostController = rememberNavController(),
     scope: CoroutineScope = rememberCoroutineScope(),
-    imageViewModel: ImageViewModel = hiltViewModel(),
     drawerLazyListState: LazyListState = rememberLazyListState()
 ) {
+    val imageViewModel: ImageViewModel = hiltViewModel()
     var selectedDrawerItem by rememberSaveable {
         mutableStateOf(Screen.Home.title)
     }
@@ -73,7 +73,7 @@ fun AppScreen(
             },
             fieldHint = "Search.."
         ) {
-            imageViewModel.searchUnsplashImage(it)
+            imageViewModel.searchPexelsImage(it)
             navController.navigate(Screen.Images.title) {
                 launchSingleTop = true
             }

@@ -35,9 +35,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewModel) {
-    val images by remember { imageViewModel.unsplashImagesList }
+    val images by remember { imageViewModel.pexelsImagesList }
     val endReached by remember { imageViewModel.unsplashEndReached }
-    val isLoading by remember { imageViewModel.isUnsplashLoading }
+    val isLoading by remember { imageViewModel.isPexelsLoading }
     val loadingError by remember { imageViewModel.unsplashError }
     val size by remember { mutableStateOf(images.size) }
     val listState = rememberLazyStaggeredGridState()
@@ -75,18 +75,20 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
                         ),
                 )
                 if (index >= size - 1 && !endReached) {
-                    imageViewModel.searchUnsplashImage()
+                    imageViewModel.searchPexelsImage()
                 }
             }
         }
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
         if (isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
+            )
         }
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.BottomEnd),

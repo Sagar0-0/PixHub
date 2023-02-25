@@ -1,6 +1,9 @@
 package com.example.pixhub.di
 
+import com.example.pixhub.data.remote.PexelsApi
 import com.example.pixhub.data.remote.UnsplashApi
+import com.example.pixhub.repository.PexelsRepoImpl
+import com.example.pixhub.repository.PexelsRepository
 import com.example.pixhub.repository.UnsplashRepoImpl
 import com.example.pixhub.repository.UnsplashRepository
 import com.example.pixhub.utils.UNSPLASH_BASE_URL
@@ -25,9 +28,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUnsplashApi() : UnsplashApi = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(UNSPLASH_BASE_URL)
-        .build()
-        .create(UnsplashApi::class.java)
+    fun providePexelsRepo(
+        api: PexelsApi
+    ) : PexelsRepository = PexelsRepoImpl(api)
 }

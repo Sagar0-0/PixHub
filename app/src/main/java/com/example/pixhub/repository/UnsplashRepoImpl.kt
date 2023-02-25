@@ -16,7 +16,7 @@ class UnsplashRepoImpl @Inject constructor(
         val response = try{
             unsplashApi.searchPhotos(query = query, page = page, pageSize = PAGE_SIZE)
         }catch (e: Exception){
-            return Resource.Error("Got an Exception while calling API")
+            return Resource.Error(e.message.toString())
         }
         return Resource.Success(response)
     }
