@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.pixhub.R
 import com.example.pixhub.ui.data.ImageViewModel
+import com.example.pixhub.utils.ApiType
 import com.example.pixhub.utils.NO_SCROLL_NUMBER
 import kotlinx.coroutines.launch
 
@@ -38,19 +39,19 @@ import kotlinx.coroutines.launch
 @Composable
 fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewModel) {
     Column(modifier = Modifier.fillMaxSize()) {
-        var selectedApi by rememberSaveable { mutableStateOf("Unsplash") }
+        var selectedApi by rememberSaveable { mutableStateOf(ApiType.UNSPLASH) }
         ApiHeader(selectedApi = selectedApi, onClick = {
             selectedApi = it
         })
 
         when(selectedApi){
-            "Unsplash"->{
+            ApiType.UNSPLASH->{
                 imageViewModel.searchUnsplashImage()
             }
-            "Pexels"->{
+            ApiType.PEXELS->{
                 imageViewModel.searchPexelsImage()
             }
-            "Pixabay"->{
+            ApiType.PIXABAY->{
                 imageViewModel.searchPixabayImage()
             }
         }
@@ -95,7 +96,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
                                     }
                                 ),
                         )
-                        if (index >= size - 1 && !endReached) {
+                        if (index >= size - 1 && !endReached && !isLoading) {
                             imageViewModel.searchPixabayImage()
                         }
                     }
@@ -134,7 +135,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
 }
 
 @Composable
-fun ApiHeader(selectedApi: String, onClick: (String) -> Unit) {
+fun ApiHeader(selectedApi: ApiType, onClick: (ApiType) -> Unit) {
 
     val getBorderStroke: (Boolean) -> BorderStroke? = { selected ->
         if (selected) {
@@ -150,13 +151,13 @@ fun ApiHeader(selectedApi: String, onClick: (String) -> Unit) {
             .padding(start = 4.dp, end =  4.dp,top =4.dp)
     ) {
         Card(
-            border = getBorderStroke(selectedApi == "Unsplash"),
+            border = getBorderStroke(selectedApi == ApiType.UNSPLASH),
             modifier = Modifier
                 .padding(horizontal = 3.dp)
                 .weight(1f)
                 .height(40.dp)
                 .background(color = Color.White.copy(0.8f), shape = RoundedCornerShape(15.dp))
-                .clickable { onClick("Unsplash") }
+                .clickable { onClick(ApiType.UNSPLASH) }
         ) {
             Image(
                 modifier = Modifier.padding(12.dp),
@@ -165,13 +166,13 @@ fun ApiHeader(selectedApi: String, onClick: (String) -> Unit) {
             )
         }
         Card(
-            border = getBorderStroke(selectedApi == "Pexels"),
+            border = getBorderStroke(selectedApi == ApiType.PEXELS),
             modifier = Modifier
                 .padding(horizontal = 3.dp)
                 .weight(1f)
                 .height(40.dp)
                 .background(color = Color.White.copy(0.8f), shape = RoundedCornerShape(15.dp))
-                .clickable { onClick("Pexels") }
+                .clickable { onClick(ApiType.PEXELS) }
         ) {
             Image(
                 modifier = Modifier.padding(3.dp),
@@ -180,13 +181,13 @@ fun ApiHeader(selectedApi: String, onClick: (String) -> Unit) {
             )
         }
         Card(
-            border = getBorderStroke(selectedApi == "Pixabay"),
+            border = getBorderStroke(selectedApi == ApiType.PIXABAY),
             modifier = Modifier
                 .padding(horizontal = 3.dp)
                 .weight(1f)
                 .height(40.dp)
                 .background(color = Color.Green.copy(0.8f), shape = RoundedCornerShape(15.dp))
-                .clickable { onClick("Pixabay") }
+                .clickable { onClick(ApiType.PIXABAY) }
         ) {
             Image(
                 modifier = Modifier.padding(12.dp),
@@ -200,6 +201,6 @@ fun ApiHeader(selectedApi: String, onClick: (String) -> Unit) {
 @Composable
 @Preview
 fun ApiHeaderPreview() {
-    ApiHeader(selectedApi = "Unsplash", onClick = {})
+    ApiHeader(selectedApi = ApiType.UNSPLASH, onClick = {})
 }
 
