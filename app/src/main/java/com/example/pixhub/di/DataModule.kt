@@ -1,15 +1,16 @@
 package com.example.pixhub.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.pixhub.data.local.ImageItemDB
 import com.example.pixhub.data.remote.PexelsApi
 import com.example.pixhub.data.remote.PixabayApi
 import com.example.pixhub.data.remote.UnsplashApi
-import com.example.pixhub.utils.PEXELS_API_KEY
-import com.example.pixhub.utils.PEXELS_BASE_URL
-import com.example.pixhub.utils.PIXABAY_BASE_URL
-import com.example.pixhub.utils.UNSPLASH_BASE_URL
+import com.example.pixhub.utils.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -19,8 +20,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object DataModule {
 
+
+    @Singleton
+    @Provides
+    fun provideImageDatabase(
+        @ApplicationContext context: Context
+    ): ImageItemDB = Room.databaseBuilder(context, ImageItemDB::class.java,DATABASE_NAME).build()
+
+    @Singleton
+    @Provides
+    fun provideImageDao(
+        imageItemDB: ImageItemDB
+    ) = imageItemDB.imagesDao()
     @Provides
     @Singleton
     fun provideUnsplashApi() : UnsplashApi = Retrofit.Builder()

@@ -6,20 +6,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun DrawerHeader() {
@@ -40,7 +35,6 @@ fun Drawer(
     itemTextStyle: TextStyle = TextStyle(fontSize = 16.sp),
     onItemClick: (String) -> Unit = {}
 ) {
-
     LazyColumn(state = drawerLazyListState) {
         item {
             DrawerHeader()
@@ -49,7 +43,13 @@ fun Drawer(
         { item ->
             Row(
                 modifier = Modifier
-                    .background(if(selectedDrawerItem==item.title)Color.DarkGray.copy(0.1f)else Color.White)
+                    .background(
+                        if (selectedDrawerItem == item.title) {
+                            Color.DarkGray.copy(0.1f)
+                        } else {
+                            Color.White
+                        }
+                    )
                     .padding(vertical = 1.dp)
                     .fillMaxWidth()
                     .clickable {

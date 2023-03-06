@@ -73,7 +73,7 @@ fun AppScreen(
             },
             fieldHint = "Search.."
         ) {
-            imageViewModel.searchPixabayImage(it)
+            imageViewModel.searchUnsplashImage(it)
             navController.navigate(Screen.Images.title) {
                 launchSingleTop = true
             }
@@ -84,7 +84,7 @@ fun AppScreen(
 }
 
 @Composable
-fun NavigationHost(navController: NavHostController, imageViewModel: ImageViewModel) {
+fun NavigationHost(navController: NavHostController,imageViewModel: ImageViewModel) {
     NavHost(
         modifier = Modifier.padding(top = 70.dp),
         navController = navController,

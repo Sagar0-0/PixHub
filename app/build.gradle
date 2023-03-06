@@ -108,6 +108,10 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
 
+    def accompanist_version = "0.28.0"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version" // Pager
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version" // Pager Indicators
+
 }
 
 // Allow references to generated code
