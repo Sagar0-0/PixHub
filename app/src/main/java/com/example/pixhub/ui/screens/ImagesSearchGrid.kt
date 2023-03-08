@@ -58,7 +58,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
                 .clip(RoundedCornerShape(50)),
             selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
-                customIndicator(tabPositions = tabPositions, pagerState = pagerState)
+                CustomIndicator(tabPositions = tabPositions, pagerState = pagerState)
             }
         ) {
             tabRowItems.forEachIndexed { index, item ->
@@ -86,7 +86,7 @@ fun ImageSearchGrid(navController: NavHostController, imageViewModel: ImageViewM
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-private fun customIndicator(tabPositions: List<TabPosition>, pagerState: PagerState) {
+private fun CustomIndicator(tabPositions: List<TabPosition>, pagerState: PagerState) {
     val transition = updateTransition(pagerState.currentPage, label = "")
     val indicatorStart by transition.animateDp(
         transitionSpec = {
